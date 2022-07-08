@@ -145,7 +145,7 @@ class FreeplayState extends MusicBeatState
 		WeekData.setDirectoryFromWeek();
 
 		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
-		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
+		scoreText.setFormat(Paths.font("crewniverse_font.ttf"), 32, FlxColor.WHITE, RIGHT);
 
 		scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0xFF000000);
 		scoreBG.alpha = 0.6;
@@ -153,7 +153,7 @@ class FreeplayState extends MusicBeatState
 		
 
 
-		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
+		diffText = new FlxText(scoreText.x, scoreText.y + 46, 0, "", 24);
 		diffText.font = scoreText.font;
 		add(diffText);
 
@@ -197,18 +197,18 @@ class FreeplayState extends MusicBeatState
 
 		#if PRELOAD_ALL
 		#if android
-		var leText:String = "Press X to listen to the Song / Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
+		var leText:String = "X = Listen to song / C = Open Gameplay Changers Menu / Y = Reset Score and Accuracy.";
 		var size:Int = 16;
 		#else
-		var leText:String = "Press SPACE to listen to the Song / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
+		var leText:String = "SPACE = Listen to song / CTRL = Open Gameplay Changers Menu / RESET = Reset Score and Accuracy.";
 		var size:Int = 16;
 		#end
 		#else
-		var leText:String = "Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
+		var leText:String = "C = Open Gameplay Changers Menu / Y = Reset Score and Accuracy.";
 		var size:Int = 18;
 		#end
-		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
-		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
+		var text:FlxText = new FlxText(textBG.x - 120, textBG.y - 7, FlxG.width, leText, size);
+		text.setFormat(Paths.font("crewniverse_font.ttf"), size, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
 		add(text);
 

@@ -21,15 +21,22 @@ class OutdatedState extends MusicBeatState
 		super.create();
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('Scrunkle'));
+		bg.screenCenter();
+		bg.alpha = 0.5;
 		add(bg);
 
 		warnText = new FlxText(0, 0, FlxG.width,
-			"Sup bro, looks like you're running an   \n
-			outdated version of Psych Engine (" + MainMenuState.psychEngineVersion + "),\n
-			please update to " + TitleState.updateVersion + "!\n
-			Press ESCAPE to proceed anyway.\n
+			"Hey there,
+			if you're interested in this mod's source code, please check out
+			my github (Kringle11) by pressing any button, or proceed normally by pressing ESC.
 			\n
-			Thank you for using the Engine!",
+			DISCLAIMER: This mod contains content that some may find creepy or disturbing.\n
+			If you are sensitive to the above then please either quit now or proceed with caution.
+			\n
+			Besides that, thank you for downloading my mod! Aside from a few resources (e.g. MaxiGamer's SU font and LetterY's camera code) this is mainly a one person project.\n
+			Credits to tposejank for Extra Keys and all the voice actors, artists and other people that have contributed to the SU community!
+			",
 			32);
 		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);
@@ -45,7 +52,7 @@ class OutdatedState extends MusicBeatState
 		if(!leftState) {
 			if (controls.ACCEPT) {
 				leftState = true;
-				CoolUtil.browserLoad("https://github.com/jigsaw-4277821/FNF-PsychEngine-ExtraKeys-Android/actions");
+				CoolUtil.browserLoad("https://github.com/Kringle11");
 			}
 			else if(controls.BACK) {
 				leftState = true;

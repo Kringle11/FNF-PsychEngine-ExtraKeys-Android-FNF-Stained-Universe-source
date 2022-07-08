@@ -67,16 +67,16 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['You Suck!', 0.2], //From 0% to 19%
-		['Shit', 0.4], //From 20% to 39%
-		['Bad', 0.5], //From 40% to 49%
-		['Bruh', 0.6], //From 50% to 59%
-		['Meh', 0.69], //From 60% to 68%
-		['Nice', 0.7], //69%
-		['Good', 0.8], //From 70% to 79%
-		['Great', 0.9], //From 80% to 89%
-		['Sick!', 1], //From 90% to 99%
-		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['...', 0.2], //From 0% to 19%
+		['Seriously?', 0.4], //From 20% to 39%
+		['Ass', 0.5], //From 40% to 49%
+		['Literally Mid', 0.6], //From 50% to 59%
+		['Ok...', 0.69], //From 60% to 68%
+		['Alright', 0.7], //69%
+		['Cool', 0.8], //From 70% to 79%
+		['Awesome', 0.9], //From 80% to 89%
+		['You Go Champ!', 1], //From 90% to 99%
+		['benis :DDD', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
 	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
@@ -182,6 +182,12 @@ class PlayState extends MusicBeatState
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
+
+	public var stainspike1:FlxSprite;
+	public var stainspike2:FlxSprite;
+	public var stainspike3:FlxSprite;
+	public var stainspike4:FlxSprite;
+
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
@@ -876,9 +882,25 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
 
+		stainspike1 = new FlxSprite(0, FlxG.height * 0.1).loadGraphic(Paths.image('stainSpike1'));
+		stainspike1.x = strumLine.x + 600;
+		stainspike1.y = 700;
+		
+		stainspike2 = new FlxSprite(0, FlxG.height * 0.1).loadGraphic(Paths.image('stainSpike2'));
+		stainspike2.x = strumLine.x + 700;
+		stainspike2.y = 700;
+		
+		stainspike3 = new FlxSprite(0, FlxG.height * 0.1).loadGraphic(Paths.image('stainSpike3'));
+		stainspike3.x = strumLine.x + 810;
+		stainspike3.y = 700;
+		
+		stainspike4 = new FlxSprite(0, FlxG.height * 0.1).loadGraphic(Paths.image('stainSpike4'));
+		stainspike4.x = strumLine.x + 920;
+		stainspike4.y = 700;
+
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
-		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.setFormat(Paths.font("crewniverse_font.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 2;
@@ -898,11 +920,11 @@ class PlayState extends MusicBeatState
 		timeBarBG.alpha = 0;
 		timeBarBG.visible = showTime;
 		timeBarBG.color = FlxColor.BLACK;
-		timeBarBG.xAdd = -4;
-		timeBarBG.yAdd = -4;
+		timeBarBG.xAdd = -23;
+		timeBarBG.yAdd = -19;
 		add(timeBarBG);
 
-		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
+		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 46), Std.int(timeBarBG.height - 38), this,
 			'songPercent', 0, 1);
 		timeBar.scrollFactor.set();
 		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
@@ -1006,14 +1028,15 @@ class PlayState extends MusicBeatState
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		healthBarBG.visible = !ClientPrefs.hideHud;
-		healthBarBG.xAdd = -4;
-		healthBarBG.yAdd = -4;
+		healthBarBG.xAdd = -23; //For the health bar BG's x and y values
+		healthBarBG.yAdd = -19;
 		add(healthBarBG);
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
-
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
+		//height and width for the healthbar itself
+		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 46), Std.int(healthBarBG.height - 38), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
+		
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
@@ -1034,14 +1057,14 @@ class PlayState extends MusicBeatState
 		reloadHealthBarColors();
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
-		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font("crewniverse_font.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
-		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.setFormat(Paths.font("crewniverse_font.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled;
@@ -1057,6 +1080,10 @@ class PlayState extends MusicBeatState
 		healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
+		stainspike1.cameras = [camHUD];
+		stainspike2.cameras = [camHUD];
+		stainspike3.cameras = [camHUD];
+		stainspike4.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
@@ -2445,14 +2472,20 @@ class PlayState extends MusicBeatState
 		if (health > 2)
 			health = 2;
 
-		if (healthBar.percent < 20)
+        // Player 1
+		if (healthBar.percent < 21)
 			iconP1.animation.curAnim.curFrame = 1;
-		else
+		else if (healthBar.percent > 79)
+			iconP1.animation.curAnim.curFrame = 2;
+		else if (healthBar.percent > 20 && healthBar.percent < 80)
 			iconP1.animation.curAnim.curFrame = 0;
 
-		if (healthBar.percent > 80)
+		// Player 2
+		if (healthBar.percent > 79)
 			iconP2.animation.curAnim.curFrame = 1;
-		else
+		else if (healthBar.percent < 21)
+			iconP2.animation.curAnim.curFrame = 2;
+		else if (healthBar.percent > 20 && healthBar.percent < 80)
 			iconP2.animation.curAnim.curFrame = 0;
 
 		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene) {
@@ -3129,6 +3162,377 @@ class PlayState extends MusicBeatState
 							songSpeedTween = null;
 						}
 					});
+				}
+
+case 'Stain Spike Rise':
+
+	var spikeRise:Int = Std.parseInt(value1);
+	if(Math.isNaN(spikeRise)) spikeRise = 0;
+
+	switch(spikeRise) {
+
+		case 1:
+
+			if(ClientPrefs.downScroll)
+			 {
+			  stainspike1.x = strumLine.x + 650;
+			  stainspike1.y = -110;
+			  stainspike1.angle = 180;
+     		 };
+
+
+				new FlxTimer().start(0.00001, function(tmr:FlxTimer)
+								{
+
+									add(stainspike1);				
+						  						  
+								 if(ClientPrefs.downScroll)
+									 {
+
+									  if (stainspike1.y < -45)
+									  {
+
+									  stainspike1.y += 35;
+									  tmr.reset();
+
+									  }
+									 }
+
+								 else if(!ClientPrefs.downScroll)
+									 {
+						 
+									   if (stainspike1.y > 35)
+									  {
+
+									  stainspike1.y -= 35;
+									  tmr.reset();
+
+									  }
+
+									 }
+								});
+
+		case 2:
+
+			if(ClientPrefs.downScroll)
+			 {
+			  stainspike2.x = strumLine.x + 760;
+			  stainspike2.y = -110;
+			  stainspike2.angle = 180;
+     		 };
+
+
+				new FlxTimer().start(0.00001, function(tmr:FlxTimer)
+								{
+
+									add(stainspike2);				
+						  						  
+								 if(ClientPrefs.downScroll)
+									 {
+
+									  if (stainspike2.y < -45)
+									  {
+
+									  stainspike2.y += 35;
+									  tmr.reset();
+
+									  }
+									 }
+
+								 else if(!ClientPrefs.downScroll)
+									 {
+						 
+									   if (stainspike2.y > 35)
+									  {
+
+									  stainspike2.y -= 35;
+									  tmr.reset();
+
+									  }
+
+									 }
+								});
+
+		case 3:
+
+			if(ClientPrefs.downScroll)
+			 {
+			  stainspike3.x = strumLine.x + 880;
+			  stainspike3.y = -110;
+			  stainspike3.angle = 180;
+     		 };
+
+
+				new FlxTimer().start(0.00001, function(tmr:FlxTimer)
+								{
+
+									add(stainspike3);				
+						  						  
+								 if(ClientPrefs.downScroll)
+									 {
+
+									  if (stainspike3.y < -45)
+									  {
+
+									  stainspike3.y += 35;
+									  tmr.reset();
+
+									  }
+									 }
+
+								 else if(!ClientPrefs.downScroll)
+									 {
+						 
+									   if (stainspike3.y > 35)
+									  {
+
+									  stainspike3.y -= 35;
+									  tmr.reset();
+
+									  }
+
+									 }
+								});
+
+		case 4:
+
+			if(ClientPrefs.downScroll)
+			 {
+			  stainspike4.x = strumLine.x + 990;
+			  stainspike4.y = -110;
+			  stainspike4.angle = 180;
+     		 };
+
+
+				new FlxTimer().start(0.00001, function(tmr:FlxTimer)
+								{
+
+									add(stainspike4);				
+						  						  
+								 if(ClientPrefs.downScroll)
+									 {
+
+									  if (stainspike4.y < -45)
+									  {
+
+									  stainspike4.y += 35;
+									  tmr.reset();
+
+									  }
+									 }
+
+								 else if(!ClientPrefs.downScroll)
+									 {
+						 
+									   if (stainspike4.y > 35)
+									  {
+
+									  stainspike4.y -= 35;
+									  tmr.reset();
+
+									  }
+
+									 }
+								});
+
+         }
+
+	case 'Stain Spike Fall':
+
+	var spikeFall:Int = Std.parseInt(value1);
+	if(Math.isNaN(spikeFall)) spikeFall = 0;
+
+	switch(spikeFall) {
+
+		case 1:
+
+				new FlxTimer().start(0.00001, function(tmr:FlxTimer)
+								{
+
+									add(stainspike1);				
+						  						  
+								 if(ClientPrefs.downScroll)
+									 {
+
+									  if (stainspike1.y > -1200)
+									  {
+
+									  stainspike1.y -= 35;
+									  tmr.reset();
+
+									  }
+									  
+										  if (stainspike1.y < -1199)
+										  {
+
+										  remove(stainspike1);
+
+										  }
+
+									}
+
+								 else if(!ClientPrefs.downScroll)
+									 {
+						 
+									   if (stainspike1.y < 1200)
+									  {
+
+									  stainspike1.y += 35;
+									  tmr.reset();
+
+									  }
+
+										  if (stainspike1.y > 1199)
+										  {
+
+										  remove(stainspike1);
+
+										  }
+									 }
+								});
+
+
+		case 2:
+
+				new FlxTimer().start(0.00001, function(tmr:FlxTimer)
+								{
+
+									add(stainspike2);				
+						  						  
+								 if(ClientPrefs.downScroll)
+									 {
+
+									  if (stainspike2.y > -1200)
+									  {
+
+									  stainspike2.y -= 35;
+									  tmr.reset();
+
+									  }
+									  
+										  if (stainspike2.y < -1199)
+										  {
+
+										  remove(stainspike2);
+
+										  }
+
+									}
+
+								 else if(!ClientPrefs.downScroll)
+									 {
+						 
+									   if (stainspike2.y < 1200)
+									  {
+
+									  stainspike2.y += 35;
+									  tmr.reset();
+
+									  }
+
+										  if (stainspike2.y > 1199)
+										  {
+
+										  remove(stainspike2);
+
+										  }
+									 }
+								});
+
+		case 3:
+
+				new FlxTimer().start(0.00001, function(tmr:FlxTimer)
+								{
+
+									add(stainspike3);				
+						  						  
+								 if(ClientPrefs.downScroll)
+									 {
+
+									  if (stainspike3.y > -1200)
+									  {
+
+									  stainspike3.y -= 35;
+									  tmr.reset();
+
+									  }
+									  
+										  if (stainspike3.y < -1199)
+										  {
+
+										  remove(stainspike3);
+
+										  }
+
+									}
+
+								 else if(!ClientPrefs.downScroll)
+									 {
+						 
+									   if (stainspike3.y < 1200)
+									  {
+
+									  stainspike3.y += 35;
+									  tmr.reset();
+
+									  }
+
+										  if (stainspike3.y > 1199)
+										  {
+
+										  remove(stainspike3);
+
+										  }
+									 }
+								});
+
+		case 4:
+
+				new FlxTimer().start(0.00001, function(tmr:FlxTimer)
+								{
+
+									add(stainspike4);				
+						  						  
+								 if(ClientPrefs.downScroll)
+									 {
+
+									  if (stainspike4.y > -1200)
+									  {
+
+									  stainspike4.y -= 35;
+									  tmr.reset();
+
+									  }
+									  
+										  if (stainspike4.y < -1199)
+										  {
+
+										  remove(stainspike4);
+
+										  }
+
+									}
+
+								 else if(!ClientPrefs.downScroll)
+									 {
+						 
+									   if (stainspike4.y < 1200)
+									  {
+
+									  stainspike4.y += 35;
+									  tmr.reset();
+
+									  }
+
+										  if (stainspike4.y > 1199)
+										  {
+
+										  remove(stainspike4);
+
+										  }
+									 }
+								});
+
 				}
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
